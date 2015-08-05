@@ -306,7 +306,7 @@ class ReciboReport(Report):
         localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo)
-        print user.company.name
+        print user.company.party.name
         return super(ReciboReport, cls).parse(report, records, data,
                 localcontext=localcontext)
 
