@@ -304,7 +304,7 @@ class ReciboReport(Report):
         user = User(Transaction().user)
         localcontext['company_name'] = user.company.party.name.upper()
         localcontext['company_adress'] = user.company.party.address_get()  
-        localcontext['company_place'] = user.company.party.address_get().subdivision.name                
+        localcontext['company_place'] = user.company.party.address_get().city                
         localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo) 
