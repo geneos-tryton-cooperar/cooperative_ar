@@ -307,7 +307,9 @@ class ReciboReport(Report):
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo)        
         return super(ReciboReport, cls).parse(report, records, data,
-                localcontext=localcontext)
+                localcontext)
+        #return super(ReciboReport, cls).parse(report, records, data,
+        #        localcontext=localcontext)
 
     @classmethod
     def _get_sing_number(cls, recibo):
