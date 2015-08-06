@@ -9,4 +9,4 @@ class Company:
     __name__ = 'company.company'
 
     numero_matricula = fields.Char('Numero de Matricula')
-    responsable_administrativo = fields.Many2One('party.party', required=True)
+    responsable_administrativo = fields.Many2One('party.party', 'Responsable Administrativo', required=True)
