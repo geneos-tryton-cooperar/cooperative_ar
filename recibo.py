@@ -316,9 +316,7 @@ class ReciboReport(Report):
 
         return super(ReciboReport, cls).parse(report, records, data,
                 localcontext)
-        #return super(ReciboReport, cls).parse(report, records, data,
-        #        localcontext=localcontext)
-
+       
     @classmethod
     def _get_sing_number(cls, recibo):
         "Convert numbers in its equivalent string text representation in spanish"
