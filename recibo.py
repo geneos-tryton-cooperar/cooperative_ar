@@ -309,7 +309,7 @@ class ReciboReport(Report):
         localcontext['company_adress'] = user.company.party.address_get()  
         localcontext['company_matricula'] = user.company.numero_matricula        
         localcontext['company_place'] = user.company.party.address_get().city                
-        localcontext['responsable_administrativo'] = str(user.company.responsable_administrativo.first_name) + " " + str(user.company.responsable_administrativo.last_name)                     
+        localcontext['responsable_administrativo'] = user.company.responsable_administrativo.name                    
         localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo) 
