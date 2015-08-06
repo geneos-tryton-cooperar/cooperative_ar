@@ -2,7 +2,7 @@
 
 <data>
     <xpath
-        expr="/form/group/field[@name='party']"
+        expr="/form/field[@name='currency']"
         position="after">
         <label name="numero_matricula" string="Nro Matricula"/>
         <field name="numero_matricula"/>    
