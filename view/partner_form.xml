@@ -42,6 +42,10 @@ this repository contains the full copyright notices and license terms. -->
         <field name="proof_tax" />
         <label name="meeting_date_of_incoroporation" />
         <field name="meeting_date_of_incoroporation" />
+        <label name="categoria_profesional" />
+        <field name="categoria_profesional" />
+        <label name="lugar_de_trabajo" />
+        <field name="lugar_de_trabajo" />            
     </page>
     <page string="Permit and Vacation" id="vacations">
         <label name="vacation_days" />

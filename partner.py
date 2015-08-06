@@ -51,6 +51,9 @@ class Partner(ModelSQL, ModelView):
 
     meeting_date_of_incoroporation = fields.Date('Meeting date of incorporation', required=True)
 
+    categoria_profesional = fields.Char('Categoria Profesional')
+    lugar_de_trabajo = fields.Char('Lugar de Trabajo')
+
     def get_rec_name(self, name):
         """Return Record name"""
         return "%d - %s" % (self.file, self.party.rec_name)

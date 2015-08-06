@@ -65,6 +65,9 @@ class Recibo(Workflow, ModelSQL, ModelView):
                 | (Eval('lines') & Eval('currency'))),
             }, depends=['state', 'lines'])
 
+    periodo_liquidado = fields.Char('Periodo Liquidado', required=True)
+    fecha_pago = fields.Date('Fecha de Pago', required=True)
+
     @classmethod
     def __setup__(cls):
         super(Recibo, cls).__setup__()
@@ -304,7 +307,9 @@ class ReciboReport(Report):
         user = User(Transaction().user)
         localcontext['company_name'] = user.company.party.name.upper()
         localcontext['company_adress'] = user.company.party.address_get()  
+        localcontext['company_matricula'] = user.company.numero_matricula        
         localcontext['company_place'] = user.company.party.address_get().city                
+        localcontext['responsable_administrativo'] = str(user.company.responsable_administrativo.first_name) + " " + str(user.company.responsable_administrativo.last_name)                     
         localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo) 

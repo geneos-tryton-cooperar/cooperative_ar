@@ -6,6 +6,7 @@ from .partnermeeting import *
 from .sanction import *
 from .recibo import *
 from .account import *
+from .company import *
 
 
 def register():
@@ -16,6 +17,7 @@ def register():
                   Sanction,
                   Recibo,
                   FiscalYear,
+                  Company,
                   module='cooperative_ar', type_='model'
                   )
     Pool.register(

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<data>
+    <xpath
+        expr="/form/group/field[@name='currency']"
+        position="after">
+        <label name="numero_matricula" string="Nro Matricula"/>
+        <field name="numero_matricula"/>    
+        <label name="responsable_administrativo" string="Responsable Administrativo"/>
+        <field name="responsable_administrativo"/>             
+    </xpath>    
+</data>
