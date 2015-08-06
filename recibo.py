@@ -302,10 +302,13 @@ class ReciboReport(Report):
         recibo = records[0]
 
         user = User(Transaction().user)
-        localcontext['company'] = user.company
+        localcontext['company_name'] = user.company.party.name.upper()
+        localcontext['company_adress'] = user.company.party.address_get()  
+        localcontext['company_place'] = user.company.party.address_get().subdivision.name                
         localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
-        localcontext['partner_vat_number'] = cls._get_vat_number(recibo)        
+        localcontext['partner_vat_number'] = cls._get_vat_number(recibo) 
+
         return super(ReciboReport, cls).parse(report, records, data,
                 localcontext)
         #return super(ReciboReport, cls).parse(report, records, data,
