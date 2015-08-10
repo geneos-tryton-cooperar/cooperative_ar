@@ -53,6 +53,7 @@ class Partner(ModelSQL, ModelView):
 
     categoria_profesional = fields.Char('Categoria Profesional')
     lugar_de_trabajo = fields.Char('Lugar de Trabajo')
+    contratista = fields.Boolean('Es Contratista')
 
     def get_rec_name(self, name):
         """Return Record name"""

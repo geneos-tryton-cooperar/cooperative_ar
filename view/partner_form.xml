@@ -45,7 +45,9 @@ this repository contains the full copyright notices and license terms. -->
         <label name="categoria_profesional" />
         <field name="categoria_profesional" />
         <label name="lugar_de_trabajo" />
-        <field name="lugar_de_trabajo" />            
+        <field name="lugar_de_trabajo" />
+        <label name="contratista" />
+        <field name="contratista" />            
     </page>
     <page string="Permit and Vacation" id="vacations">
         <label name="vacation_days" />
