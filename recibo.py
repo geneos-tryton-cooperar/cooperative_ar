@@ -5,6 +5,7 @@ from trytond.pyson import Eval, If
 from trytond.transaction import Transaction
 from trytond.pool import Pool
 from trytond.report import Report
+import datetime
 
 __all__ = ['Recibo', 'ReciboReport']
 
@@ -318,6 +319,11 @@ class ReciboReport(Report):
         localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo) 
+        
+        fecha_pago = datetime.datetime.strptime(recibo.fecha_pago, "%Y-%m-%d").strftime("%d/%m/%Y")
+        localcontext['fecha_pago'] = fecha_pago
+
+
         if recibo.partner.contratista:
             localcontext['concepto_liquidado'] = "ANTICIPO DE SUELDO"
         else: 
