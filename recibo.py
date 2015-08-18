@@ -320,7 +320,7 @@ class ReciboReport(Report):
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo) 
         
-        fecha_pago = datetime.datetime.strptime(recibo.fecha_pago, "%Y-%m-%d").strftime("%d/%m/%Y")
+        fecha_pago = datetime.datetime.strptime(str(recibo.fecha_pago), "%Y-%m-%d").strftime("%d/%m/%Y")
         localcontext['fecha_pago'] = fecha_pago
 
 
