@@ -44,12 +44,17 @@ class Recibo(Workflow, ModelSQL, ModelView):
     party = fields.Function(fields.Many2One('party.party', 'Party',
         required=True, states=_STATES, depends=_DEPENDS,
         on_change_with=['partner']),'on_change_with_party')
+    #company = fields.Many2One('company.company', 'Company', required=True,
+    #    states=_STATES, select=True, domain=[
+    #        ('id', If(Eval('context', {}).contains('company'), '=', '!='),
+    #            Eval('context', {}).get('company', -1)),
+    #        ],
+    #    depends=_DEPENDS)
+
     company = fields.Many2One('company.company', 'Company', required=True,
-        states=_STATES, select=True, domain=[
-            ('id', If(Eval('context', {}).contains('company'), '=', '!='),
-                Eval('context', {}).get('company', -1)),
-            ],
+        states=_STATES, select=True, 
         depends=_DEPENDS)
+
     accounting_date = fields.Date('Accounting Date', states=_STATES,
         depends=_DEPENDS)
     confirmed_move = fields.Many2One('account.move', 'Confirmed Move', readonly=True)
