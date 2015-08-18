@@ -29,7 +29,7 @@
        
         <record model="ir.action.report" id="report_recibo">
             <field name="active" eval="True"/>
-            <field name="name">Receipt</field>
+            <field name="name">Recibo</field>
             <field name="model">cooperative.partner.recibo</field>
             <field name="report_name">cooperative.partner.recibo</field>
             <field name="report">cooperative_ar/recibo.odt</field>
