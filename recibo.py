@@ -163,7 +163,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
         return 'Retornos a cuenta de excedentes'
 
     @staticmethod
-    def default_company():
+    def default_company():        
         return Transaction().context.get('company')
 
     @staticmethod
