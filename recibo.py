@@ -18,31 +18,31 @@ _STATES = {
 class Recibo(Workflow, ModelSQL, ModelView):
     "cooperative.partner.recibo"
     __name__ = "cooperative.partner.recibo"
-    date = fields.Date('Date',
+    date = fields.Date('Fecha',
             states={
                 'readonly': (Eval('state') != 'draft')
             }, required=True)
-    amount = fields.Numeric('Amount',digits=(16,2),
+    amount = fields.Numeric('Monto',digits=(16,2),
             states={
                 'readonly': (Eval('state') != 'draft')
             }, required=True)
-    partner = fields.Many2One('cooperative.partner', 'Partner', required=True,
+    partner = fields.Many2One('cooperative.partner', 'Socio', required=True,
             states={
                 'readonly': (Eval('state') != 'draft')
             })
     state = fields.Selection([
-        ('draft', 'Draft'),
-        ('confirmed', 'Confirm'),
-        ('paid', 'Paid'),
-        ('cancel', 'Canceled'),
+        ('draft', 'Borrador'),
+        ('confirmed', 'Confirmado'),
+        ('paid', 'Pagado'),
+        ('cancel', 'Cancelado'),
         ], 'State', readonly=True)
-    number = fields.Char('Number', size=None, readonly=True, select=True)
+    number = fields.Char('Numero', size=None, readonly=True, select=True)
 
-    description = fields.Char('Description', size=None, states=_STATES,
+    description = fields.Char('Descripcion', size=None, states=_STATES,
         depends=_DEPENDS)
 
     ## Integrando con asientos
-    party = fields.Function(fields.Many2One('party.party', 'Party',
+    party = fields.Function(fields.Many2One('party.party', 'Entidad',
         required=True, states=_STATES, depends=_DEPENDS,
         on_change_with=['partner']),'on_change_with_party')
     #company = fields.Many2One('company.company', 'Company', required=True,
@@ -52,20 +52,20 @@ class Recibo(Workflow, ModelSQL, ModelView):
     #        ],
     #    depends=_DEPENDS)
 
-    company = fields.Many2One('company.company', 'Company', required=True,
+    company = fields.Many2One('company.company', 'Coooperativa', required=True,
         states=_STATES, select=True, 
         depends=_DEPENDS)
 
-    accounting_date = fields.Date('Accounting Date', states=_STATES,
+    accounting_date = fields.Date('Fecha de Contabilizacion', states=_STATES,
         depends=_DEPENDS)
-    confirmed_move = fields.Many2One('account.move', 'Confirmed Move', readonly=True)
-    paid_move = fields.Many2One('account.move', 'Paid Move', readonly=True,
+    confirmed_move = fields.Many2One('account.move', 'Asiento de Confirmacion', readonly=True)
+    paid_move = fields.Many2One('account.move', 'Asiento de Pago', readonly=True,
         states={
             'invisible': Eval('state').in_(['draft', 'confirmed']),
             })
-    journal = fields.Many2One('account.journal', 'Journal', required=True,
+    journal = fields.Many2One('account.journal', 'Diario', required=True,
         states=_STATES, depends=_DEPENDS)
-    currency = fields.Many2One('currency.currency', 'Currency', required=True,
+    currency = fields.Many2One('currency.currency', 'Moneda', required=True,
         states={
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines') & Eval('currency'))),
@@ -161,6 +161,13 @@ class Recibo(Workflow, ModelSQL, ModelView):
     @staticmethod
     def default_description():
         return 'Retornos a cuenta de excedentes'
+
+
+    @staticmethod
+    def default_journal():
+        Journal = Pool().get('account.journal')
+        journal = Journal.search([('name','=', 'Gastos')])[0]                         
+        return journal
 
     @staticmethod
     def default_company():        
