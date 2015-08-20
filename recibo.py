@@ -163,14 +163,8 @@ class Recibo(Workflow, ModelSQL, ModelView):
         return 'Retornos a cuenta de excedentes'
 
     @staticmethod
-    def default_journal():
-        Journal = Pool().get('account.journal')
-        journal = Journal.search([('code','=', 'EXP')])[0]                         
-        if journal:
-            return journal
-        
-        return None
-
+    def default_journal():        
+        return Pool().get('account.journal').search([('code','=','EXP')])[0]                                            
         
     @staticmethod
     def default_company():        
