@@ -166,8 +166,10 @@ class Recibo(Workflow, ModelSQL, ModelView):
     def default_journal():
         Journal = Pool().get('account.journal')
         journal = Journal.search([('code','=', 'EXP')])[0]                         
-    
-        return journal
+        if journal:
+            return journal
+        
+        return None
 
         
     @staticmethod
