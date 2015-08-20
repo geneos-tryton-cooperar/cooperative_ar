@@ -162,9 +162,9 @@ class Recibo(Workflow, ModelSQL, ModelView):
     def default_description():
         return 'Retornos a cuenta de excedentes'
 
-    @staticmethod
-    def default_journal():        
-        return Pool().get('account.journal').search([('code','=','EXP')])[0]                                            
+    #@staticmethod
+    #def default_journal():        
+    #    return Pool().get('account.journal').search([('code','=','EXP')])[0]                                            
         
     @staticmethod
     def default_company():        
