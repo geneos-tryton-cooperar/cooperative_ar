@@ -63,7 +63,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
         states={
             'invisible': Eval('state').in_(['draft', 'confirmed']),
             })
-    journal = fields.Many2One('account.journal', 'Diario', required=True,
+    journal = fields.Many2One('account.journal', 'Diario', 
         states=_STATES, depends=_DEPENDS)
     currency = fields.Many2One('currency.currency', 'Moneda', required=True,
         states={
@@ -123,6 +123,8 @@ class Recibo(Workflow, ModelSQL, ModelView):
 
         moves = []
         for recibo in recibos:
+            recibo.journal = Pool().get('account.journal').search([('code','=','EXP')])[0]    
+            recibo.save()
             recibo.set_number()
             moves.append(recibo.create_confirmed_move())
 
@@ -161,6 +163,16 @@ class Recibo(Workflow, ModelSQL, ModelView):
     @staticmethod
     def default_description():
         return 'Retornos a cuenta de excedentes'
+
+    @staticmethod
+    def default_date():
+        Date_ = Pool().get('ir.date')
+        return Date_.today()
+
+    @staticmethod
+    def default_fecha_pago():
+        Date_ = Pool().get('ir.date')
+        return Date_.today()
 
     #@staticmethod
     #def default_journal():        

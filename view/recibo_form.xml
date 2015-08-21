@@ -15,8 +15,8 @@ this repository contains the full copyright notices and license terms. -->
     <field name="amount" />
     <label name="description" />
     <field name="description" />
-    <label name="journal" />
-    <field name="journal" />
+    <!--<label name="journal" />
+    <field name="journal" />-->
     <label name="currency" />
     <field name="currency" />
     <label name="periodo_liquidado" />
