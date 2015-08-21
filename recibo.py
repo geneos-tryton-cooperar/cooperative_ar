@@ -109,8 +109,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
 
         moves = []
         for recibo in recibos:
-            recibo.journal = Pool().get('account.journal').search([('code','=','EXP')])[0]    
-            recibo.save()            
+                    
             if recibo.confirmed_move:
                 moves.append(recibo.confirmed_move)
         if moves:
@@ -125,6 +124,8 @@ class Recibo(Workflow, ModelSQL, ModelView):
 
         moves = []
         for recibo in recibos:
+            recibo.journal = Pool().get('account.journal').search([('code','=','EXP')])[0]    
+            recibo.save()   
             recibo.set_number()
             moves.append(recibo.create_confirmed_move())
 
