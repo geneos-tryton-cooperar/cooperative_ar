@@ -22,7 +22,13 @@ this repository contains the full copyright notices and license terms. -->
     <label name="periodo_liquidado" />
     <field name="periodo_liquidado" />
     <label name="fecha_pago" />
-    <field name="fecha_pago" />  
+    <field name="fecha_pago" /> 
+    <label name="pago_monotributo" />
+    <field name="pago_monotributo" /> 
+    <label name="valor_monotributo" />
+    <field name="valor_monotributo" /> 
+    <label name="mes_monotributo" />
+    <field name="mes_monotributo" />  
     <notebook colspan="6">
         <page string="Invoice" id="invoice" col="6">
             <group col="6" colspan="4" id="buttons">

@@ -74,6 +74,24 @@ class Recibo(Workflow, ModelSQL, ModelView):
     periodo_liquidado = fields.Char('Periodo Liquidado', required=True)
     fecha_pago = fields.Date('Fecha de Pago', required=True)
 
+    #Para concepto de Monotributo    
+    pago_monotributo = fields.Boolean('¿Pago de monotributo?')
+    valor_monotributo = fields.Float('Valor del monotributo',  states={'invisible': Not(Equal(Eval('pago_monotributo'),True))})
+    mes_monotributo = fields.Selection([('',''),
+        ('Enero', 'Enero'),
+        ('Febrero', 'Febrero'),
+        ('Marzo', 'Marzo'),
+        ('Abril', 'Abril'),
+        ('Mayo', 'Mayo'),
+        ('Junio', 'Junio'),
+        ('Julio', 'Julio'),
+        ('Agosto', 'Agosto'),
+        ('Septiembre', 'Septiembre'),
+        ('Octubre', 'Octubre'),
+        ('Noviembre', 'Noviembre'),
+        ('Diciembre', 'Diciembre'),                    
+        ])
+
     @classmethod
     def __setup__(cls):
         super(Recibo, cls).__setup__()
