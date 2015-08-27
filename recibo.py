@@ -1,7 +1,7 @@
 #! -*- coding: utf8 -*-
 from decimal import Decimal
 from trytond.model import ModelView, Workflow, ModelSQL, fields
-from trytond.pyson import Eval, If
+from trytond.pyson import Eval, If, Not, Equal
 from trytond.transaction import Transaction
 from trytond.pool import Pool
 from trytond.report import Report
