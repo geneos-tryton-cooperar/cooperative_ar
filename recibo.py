@@ -75,7 +75,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
     fecha_pago = fields.Date('Fecha de Pago', required=True)
 
     #Para concepto de Monotributo    
-    pago_monotributo = fields.Boolean('¿Pago de monotributo?')
+    pago_monotributo = fields.Boolean('Pago de monotributo')
     valor_monotributo = fields.Float('Valor del monotributo',  states={'invisible': Bool(Eval('pago_monotributo'))})
     mes_monotributo = fields.Selection([('',''),
         ('Enero', 'Enero'),
