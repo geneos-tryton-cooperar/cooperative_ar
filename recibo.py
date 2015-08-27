@@ -1,7 +1,7 @@
 #! -*- coding: utf8 -*-
 from decimal import Decimal
 from trytond.model import ModelView, Workflow, ModelSQL, fields
-from trytond.pyson import Eval, If, Not, Equal
+from trytond.pyson import Eval, If, Not, Equal, Bool
 from trytond.transaction import Transaction
 from trytond.pool import Pool
 from trytond.report import Report
@@ -76,7 +76,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
 
     #Para concepto de Monotributo    
     pago_monotributo = fields.Boolean('¿Pago de monotributo?')
-    valor_monotributo = fields.Float('Valor del monotributo',  states={'invisible': Not(Equal(Eval('pago_monotributo'),True))})
+    valor_monotributo = fields.Float('Valor del monotributo',  states={'invisible': Bool(Eval('pago_monotributo'))})
     mes_monotributo = fields.Selection([('',''),
         ('Enero', 'Enero'),
         ('Febrero', 'Febrero'),
@@ -89,8 +89,9 @@ class Recibo(Workflow, ModelSQL, ModelView):
         ('Septiembre', 'Septiembre'),
         ('Octubre', 'Octubre'),
         ('Noviembre', 'Noviembre'),
-        ('Diciembre', 'Diciembre'),                    
-        ])
+        ('Diciembre', 'Diciembre')], 
+        'Mes del Monotributo', states={'invisible': Bool(Eval('pago_monotributo'))},                   
+        )
 
     @classmethod
     def __setup__(cls):
