@@ -375,7 +375,10 @@ class ReciboReport(Report):
         "Convert numbers in its equivalent string text representation in spanish"
         from singing_girl import Singer
         singer = Singer()
-        return singer.sing(recibo.amount)
+        if recibo.pago_monotributo:
+            return singer.sing(Decimal(recibo.amount) + Decimal(recibo.valor_monotributo))
+        else:
+            return singer.sing(recibo.amount)
 
     @classmethod
     def _get_vat_number(cls, company):
