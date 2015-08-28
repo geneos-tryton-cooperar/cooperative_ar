@@ -357,6 +357,10 @@ class ReciboReport(Report):
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo)         
         fecha_pago = datetime.datetime.strptime(str(recibo.fecha_pago), "%Y-%m-%d").strftime("%d/%m/%Y")
         localcontext['fecha_pago'] = fecha_pago
+        if recibo.pago_monotributo:
+            localcontext['total'] = Decimal(recibo.amount) +  Decimal(recibo.valor_monotributo)
+        else:
+            localcontext['total'] = Decimal(recibo.amount)
 
         if recibo.partner.contratista:
             localcontext['concepto_liquidado'] = "ANTICIPO DE SUELDO"
