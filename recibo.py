@@ -220,7 +220,11 @@ class Recibo(Workflow, ModelSQL, ModelView):
             return self.partner.party.id
 
     def on_change_with_total(self, name=None):
-        total = Decimal(self.amount) + Decimal(self.valor_monotributo)    
+        if self.valor_monotributo:
+            total = Decimal(self.amount) + Decimal(self.valor_monotributo)    
+        else:
+            total = Decimal(self.amount)
+            
         return total
 
     def set_number(self):
