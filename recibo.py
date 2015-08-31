@@ -93,6 +93,11 @@ class Recibo(Workflow, ModelSQL, ModelView):
         'Mes del Monotributo', states={'invisible': Not(Bool(Eval('pago_monotributo')))},                   
         )
 
+   
+    total = fields.Function(fields.Numeric('Total', digits=(16, 2),
+        on_change_with=['amount', 'pago_monotributo', 'total']),
+        'on_change_with_total')
+
     @classmethod
     def __setup__(cls):
         super(Recibo, cls).__setup__()
@@ -199,13 +204,6 @@ class Recibo(Workflow, ModelSQL, ModelView):
     def default_valor_monotributo():
         return Decimal(0)
 
-
-
-
-    #@staticmethod
-    #def default_journal():        
-    #    return Pool().get('account.journal').search([('code','=','EXP')])[0]                                            
-        
     @staticmethod
     def default_company():        
         return Transaction().context.get('company')
@@ -220,6 +218,10 @@ class Recibo(Workflow, ModelSQL, ModelView):
     def on_change_with_party(self, name=None):
         if self.partner:
             return self.partner.party.id
+
+    def on_change_with_total(self, name=None):
+        total = Decimal(self.amount) + Decimal(self.valor_monotributo)    
+        return total
 
     def set_number(self):
         '''
@@ -365,10 +367,6 @@ class ReciboReport(Report):
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo)         
         fecha_pago = datetime.datetime.strptime(str(recibo.fecha_pago), "%Y-%m-%d").strftime("%d/%m/%Y")
         localcontext['fecha_pago'] = fecha_pago
-        #if recibo.pago_monotributo:
-        #    localcontext['total'] = Decimal(recibo.amount) +  Decimal(recibo.valor_monotributo)
-        #else:
-        #    localcontext['total'] = Decimal(recibo.amount)
 
         if recibo.partner.contratista:
             localcontext['concepto_liquidado'] = "ANTICIPO DE SUELDO"
@@ -383,10 +381,7 @@ class ReciboReport(Report):
         "Convert numbers in its equivalent string text representation in spanish"
         from singing_girl import Singer
         singer = Singer()
-        if recibo.pago_monotributo:
-            return singer.sing(Decimal(recibo.amount) + Decimal(recibo.valor_monotributo))
-        else:
-            return singer.sing(recibo.amount)
+        return singer.sing(recibo.total)
 
     @classmethod
     def _get_vat_number(cls, company):
