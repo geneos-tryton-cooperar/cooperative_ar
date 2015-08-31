@@ -194,6 +194,14 @@ class Recibo(Workflow, ModelSQL, ModelView):
         Date_ = Pool().get('ir.date')
         return Date_.today()
 
+
+    @staticmethod
+    def default_valor_monotributo():
+        return Decimal(0)
+
+
+
+
     #@staticmethod
     #def default_journal():        
     #    return Pool().get('account.journal').search([('code','=','EXP')])[0]                                            
@@ -357,10 +365,10 @@ class ReciboReport(Report):
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo)         
         fecha_pago = datetime.datetime.strptime(str(recibo.fecha_pago), "%Y-%m-%d").strftime("%d/%m/%Y")
         localcontext['fecha_pago'] = fecha_pago
-        if recibo.pago_monotributo:
-            localcontext['total'] = Decimal(recibo.amount) +  Decimal(recibo.valor_monotributo)
-        else:
-            localcontext['total'] = Decimal(recibo.amount)
+        #if recibo.pago_monotributo:
+        #    localcontext['total'] = Decimal(recibo.amount) +  Decimal(recibo.valor_monotributo)
+        #else:
+        #    localcontext['total'] = Decimal(recibo.amount)
 
         if recibo.partner.contratista:
             localcontext['concepto_liquidado'] = "ANTICIPO DE SUELDO"
