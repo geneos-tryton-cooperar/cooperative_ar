@@ -219,7 +219,14 @@ class Recibo(Workflow, ModelSQL, ModelView):
         Date_ = Pool().get('ir.date')
         return Date_.today()
 
+    @staticmethod
+    def default_amount():
+        return Decimal(0)
 
+    @staticmethod
+    def default_valor_cuota():
+        return Decimal(0)
+    
     @staticmethod
     def default_valor_monotributo():
         return Decimal(0)
