@@ -35,7 +35,7 @@ this repository contains the full copyright notices and license terms. -->
     <field name="valor_cuota" /> 
     <label name="mes_cuota" />
     <field name="mes_cuota" /> 
-    <newline>
+    <newline />
     <label name="total" />
     <field name="total" /> 
     <label name="total_en_letras" />
