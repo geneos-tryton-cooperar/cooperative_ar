@@ -35,6 +35,11 @@ this repository contains the full copyright notices and license terms. -->
     <field name="valor_cuota" /> 
     <label name="mes_cuota" />
     <field name="mes_cuota" /> 
+    <newline>
+    <label name="total" />
+    <field name="total" /> 
+    <label name="total_en_letras" />
+    <field name="total_en_letras" />     
     <notebook colspan="6">
         <page string="Invoice" id="invoice" col="6">
             <group col="6" colspan="4" id="buttons">
