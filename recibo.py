@@ -93,10 +93,30 @@ class Recibo(Workflow, ModelSQL, ModelView):
         'Mes del Monotributo', states={'invisible': Not(Bool(Eval('pago_monotributo')))},                   
         )
 
-   
+    #Para pago de cuotas    
+    cobro_cuota = fields.Boolean('Cobro de cuota')
+    valor_cuota = fields.Numeric('Valor de la cuota',digits=(16,2), states={'invisible': Not(Bool(Eval('cobro_cuota')))})
+    mes_cuota = fields.Selection([('',''),
+        ('Enero', 'Enero'),
+        ('Febrero', 'Febrero'),
+        ('Marzo', 'Marzo'),
+        ('Abril', 'Abril'),
+        ('Mayo', 'Mayo'),
+        ('Junio', 'Junio'),
+        ('Julio', 'Julio'),
+        ('Agosto', 'Agosto'),
+        ('Septiembre', 'Septiembre'),
+        ('Octubre', 'Octubre'),
+        ('Noviembre', 'Noviembre'),
+        ('Diciembre', 'Diciembre')], 
+        'Mes de la Cuota', states={'invisible': Not(Bool(Eval('cobro_cuota')))},                   
+        )
+
     total = fields.Function(fields.Numeric('Total', digits=(16, 2),
-        on_change_with=['amount', 'pago_monotributo', 'total']),
+        on_change_with=['amount', 'pago_monotributo', 'cobro_cuota', 'valor_cuota', 'valor_monotributo', 'total']),
         'on_change_with_total')
+
+    total_en_letras = fields.Function(fields.Char('Total en letras'), 'get_sing_number')
 
     @classmethod
     def __setup__(cls):
@@ -220,11 +240,13 @@ class Recibo(Workflow, ModelSQL, ModelView):
             return self.partner.party.id
 
     def on_change_with_total(self, name=None):
-        if self.valor_monotributo:
+        if self.pago_monotributo:
             total = Decimal(self.amount) + Decimal(self.valor_monotributo)    
         else:
             total = Decimal(self.amount)
-            
+        if self.cobro_cuota:
+            total -= Decimal(self.valor_cuota) 
+
         return total
 
     def set_number(self):
@@ -349,6 +371,12 @@ class Recibo(Workflow, ModelSQL, ModelView):
                 })
         return move
 
+    def get_sing_number(self):
+        "Convert numbers in its equivalent string text representation in spanish"
+        from singing_girl import Singer
+        singer = Singer()
+        return singer.sing(self.total)
+
 
 class ReciboReport(Report):
     __name__ = 'cooperative.partner.recibo'
@@ -366,7 +394,7 @@ class ReciboReport(Report):
         localcontext['company_matricula'] = user.company.numero_matricula        
         localcontext['company_place'] = user.company.party.address_get().city                
         localcontext['responsable_administrativo'] = user.company.responsable_administrativo.name                    
-        localcontext['sing_number'] = cls._get_sing_number(recibo)
+        #localcontext['sing_number'] = cls._get_sing_number(recibo)
         localcontext['vat_number'] = cls._get_vat_number(user.company)
         localcontext['partner_vat_number'] = cls._get_vat_number(recibo)         
         fecha_pago = datetime.datetime.strptime(str(recibo.fecha_pago), "%Y-%m-%d").strftime("%d/%m/%Y")
