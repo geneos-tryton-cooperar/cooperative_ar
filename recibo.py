@@ -371,7 +371,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
                 })
         return move
 
-    def get_sing_number(self):
+    def get_sing_number(self, name=None):
         "Convert numbers in its equivalent string text representation in spanish"
         from singing_girl import Singer
         singer = Singer()
