@@ -112,8 +112,13 @@ class Recibo(Workflow, ModelSQL, ModelView):
         'Mes de la Cuota', states={'invisible': Not(Bool(Eval('cobro_cuota')))},                   
         )
 
+    #Para otros conceptos (AUH, etc)
+    pago_otros= fields.Boolean('Pago de adicional')
+    concepto_otros = fields.Char('Nombre del concepto adicional')
+    valor_otros = fields.Numeric('Valor del concepto adicional',digits=(16,2), states={'invisible': Not(Bool(Eval('pago_otros')))})
+    
     total = fields.Function(fields.Numeric('Total', digits=(16, 2),
-        on_change_with=['amount', 'pago_monotributo', 'cobro_cuota', 'valor_cuota', 'valor_monotributo', 'total']),
+        on_change_with=['amount', 'pago_monotributo', 'cobro_cuota', 'valor_cuota', 'valor_monotributo', 'total', 'pago_otros', 'valor_otros']),
         'on_change_with_total')
 
     total_en_letras = fields.Function(fields.Char('Total en letras'), 'get_sing_number')
@@ -231,6 +236,10 @@ class Recibo(Workflow, ModelSQL, ModelView):
     def default_valor_monotributo():
         return Decimal(0)
 
+     @staticmethod
+    def default_valor_otros():
+        return Decimal(0)
+
     @staticmethod
     def default_company():        
         return Transaction().context.get('company')
@@ -253,6 +262,8 @@ class Recibo(Workflow, ModelSQL, ModelView):
             total = Decimal(self.amount)
         if self.cobro_cuota:
             total -= Decimal(self.valor_cuota) 
+        if self.pago_otros:
+            total += Decimal(self.valor_otros)
 
         return total
 
