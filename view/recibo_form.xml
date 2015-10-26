@@ -36,6 +36,13 @@ this repository contains the full copyright notices and license terms. -->
     <label name="mes_cuota" />
     <field name="mes_cuota" /> 
     <newline />
+    <label name="pago_otros" />
+    <field name="pago_otros" /> 
+    <label name="conceptos_otros" />
+    <field name="conceptos_otros" /> 
+    <label name="valor_otros" />
+    <field name="valor_otros" />   
+    <newline/>
     <label name="total" />
     <field name="total" /> 
     <label name="total_en_letras" />
