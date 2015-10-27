@@ -113,7 +113,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
         )
 
     #Para otros conceptos (AUH, etc)
-    pago_otros= fields.Boolean('Pago de adicional')
+    pago_otros = fields.Boolean('Pago de adicional')
     concepto_otros = fields.Char('Nombre del concepto adicional',states={'invisible': Not(Bool(Eval('pago_otros')))})
     valor_otros = fields.Numeric('Valor del concepto adicional',digits=(16,2), states={'invisible': Not(Bool(Eval('pago_otros')))})
     
@@ -236,7 +236,7 @@ class Recibo(Workflow, ModelSQL, ModelView):
     def default_valor_monotributo():
         return Decimal(0)
 
-     @staticmethod
+    @staticmethod
     def default_valor_otros():
         return Decimal(0)
 
