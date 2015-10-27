@@ -37,8 +37,8 @@ this repository contains the full copyright notices and license terms. -->
     <field name="mes_cuota" /> 
     <label name="pago_otros" />
     <field name="pago_otros" /> 
-    <label name="conceptos_otros" />
-    <field name="conceptos_otros" /> 
+    <label name="concepto_otros" />
+    <field name="concepto_otros" /> 
     <label name="valor_otros" />
     <field name="valor_otros" />           
     <newline/>
